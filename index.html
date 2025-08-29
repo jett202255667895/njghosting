@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NJGhosting - Next-Gen Web Hosting</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #06b6d4;
+            --dark: #0f0f23;
+            --darker: #050514;
+            --light: #f8fafc;
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--dark);
+            color: white;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 9999px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            z-index: 10;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            color: var(--light);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Hero Section */
+        #hero {
+            position: relative;
+            padding: 100px 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .hero-bg-lights {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .hero-light {
+            position: absolute;
+            background: radial-gradient(circle, var(--primary), transparent 70%);
+            opacity: 0.2;
+            animation: moveLight 20s infinite alternate ease-in-out;
+            border-radius: 50%;
+        }
+
+        .light-1 {
+            width: 500px;
+            height: 500px;
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .light-2 {
+            width: 600px;
+            height: 600px;
+            bottom: 10%;
+            right: 15%;
+            animation-delay: -5s;
+        }
+
+        .light-3 {
+            width: 400px;
+            height: 400px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -10s;
+        }
+
+        @keyframes moveLight {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(20px, 20px) scale(1.1);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            background: linear-gradient(135deg, white, #a0a0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            color: #ccc;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .hero-buttons .btn {
+            margin: 0 10px;
+        }
+
+        @media (min-width: 768px) {
+            .hero-content h1 {
+                font-size: 4.5rem;
+            }
+        }
+
+        /* Features Section */
+        #features {
+            padding: 80px 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, var(--light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-card .icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .feature-card .icon svg {
+            fill: white;
+            width: 30px;
+            height: 30px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #ccc;
+            font-size: 1rem;
+        }
+        
+        /* Stats Section */
+        #stats {
+            padding: 80px 0;
+            background: var(--darker);
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+
+        /* Call to Action Section */
+        #cta {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .cta-content {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .cta-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .cta-content p {
+            font-size: 1.1rem;
+            color: #eee;
+            margin-bottom: 40px;
+        }
+
+        /* Footer */
+        #footer {
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container" style="padding: 20px 0; display: flex; justify-content: space-between; align-items: center;">
+            <a href="#" class="logo" style="font-size: 1.5rem; font-weight: 700; color: white; text-decoration: none;">NJGhosting</a>
+            <div class="nav-links">
+                <a href="https://panel.njghosting.xyz/auth/login" class="btn btn-secondary" style="margin-left: 10px;">Login</a>
+                <a href="https://panel.njghosting.xyz/auth/register" class="btn btn-primary" style="margin-left: 10px;">Register</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero">
+            <div class="hero-bg-lights">
+                <div class="hero-light light-1"></div>
+                <div class="hero-light light-2"></div>
+                <div class="hero-light light-3"></div>
+            </div>
+            <div class="container hero-content">
+                <h1>Next-Gen Web Hosting</h1>
+                <p>Experience blazing-fast speeds, unmatched reliability, and a user-friendly control panel built for developers and businesses alike.</p>
+                <div class="hero-buttons">
+                    <a href="https://panel.njghosting.xyz/auth/register" class="btn btn-primary">Get Started Now</a>
+                    <a href="#features" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="features">
+            <div class="container">
+                <h2 class="section-title">Why Choose NJGhosting?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.5-11.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5-1.5.67-1.5 1.5.67 1.5 1.5 1.5zm-9 0c.83 0 1.5-.67 1.5-1.5S7.33 6.5 6.5 6.5 5 7.17 5 8s.67 1.5 1.5 1.5zM12 16.5c-2.33 0-4.32-1.72-4.71-4h9.42c-.39 2.28-2.38 4-4.71 4z"></path></svg>
+                        </div>
+                        <h3>Unmatched Performance</h3>
+                        <p>Our servers are optimized for speed, ensuring your website loads in a flash.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm-1 9v6h2v-6h-2zm-1 8h4v2h-4v-2z"></path></svg>
+                        </div>
+                        <h3>Ironclad Security</h3>
+                        <p>From DDoS protection to daily backups, we keep your data safe and secure.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
+                        </div>
+                        <h3>99.9% Uptime</h3>
+                        <p>We guarantee your website will be online when your customers need it most.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 14V6c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM3 6h14v8H3V6zM15 20H1c-1.1 0-2-.9-2-2s-.9-2-2-2v-4h2v4h14v-2h2v4c0 1.1-.9 2-2 2z"></path></svg>
+                        </div>
+                        <h3>24/7 Expert Support</h3>
+                        <p>Our team of hosting experts is available around the clock to assist you.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="stats">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number">99.9%</span>
+                        <span class="stat-label">Uptime Guarantee</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">50ms</span>
+                        <span class="stat-label">Average Latency</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">10k+</span>
+                        <span class="stat-label">Happy Users</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cta">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Ready to elevate your hosting?</h2>
+                    <p>Join thousands of satisfied customers who trust us with their online presence.</p>
+                    <a href="https://panel.njghosting.xyz/auth/register" class="btn btn-primary">Get Started Now</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="footer">
+        <div class="container">
+            <p>&copy; 2024 NJGhosting. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Animate elements on scroll
+        const faders = document.querySelectorAll('.feature-card, .stat-item, .cta-content');
+        const appearOptions = {
+            threshold: 0.5
+        };
+
+        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    appearOnScroll.unobserve(entry.target);
+                }
+            });
+        }, appearOptions);
+
+        faders.forEach(fader => {
+            fader.style.opacity = '0';
+            fader.style.transform = 'translateY(20px)';
+            fader.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            appearOnScroll.observe(fader);
+        });
+
+        // Delay the hero content fade-in to allow for the background animation to start
+        setTimeout(() => {
+            const heroContent = document.querySelector('.hero-content');
+            heroContent.style.opacity = '1';
+            heroContent.style.transform = 'translateY(0)';
+        }, 100);
+
+        // Performance metrics counter animation
+        function animateCounter(element, target, suffix = '') {
+            const current = parseInt(element.textContent) || 0;
+            const increment = target / 50;
+            let counter = current;
+            
+            const timer = setInterval(() => {
+                counter += increment;
+                if (counter >= target) {
+                    counter = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(counter) + suffix;
+            }, 30);
+        }
+
+        // Animate counters when they come into view
+        const statNumbers = document.querySelectorAll('.stat-number');
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
+                    entry.target.classList.add('animated');
+                    const text = entry.target.textContent;
+                    
+                    if (text.includes('%')) {
+                        animateCounter(entry.target, 99.9, '%');
+                    } else if (text.includes('ms')) {
+                        animateCounter(entry.target, 50, 'ms');
+                    }
+                }
+            });
+        });
+
+        statNumbers.forEach(stat => statsObserver.observe(stat));
+    </script>
+</body>
+</html>
