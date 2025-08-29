@@ -20,8 +20,9 @@
             --dark: #0f0f23;
             --darker: #050514;
             --light: #f8fafc;
-            --glass: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glow: #a855f7;
         }
 
         body {
@@ -44,14 +45,15 @@
             border-radius: 9999px;
             text-decoration: none;
             font-weight: 600;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.3s ease;
             position: relative;
             z-index: 10;
+            border: none;
         }
 
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
         .btn-primary {
@@ -61,17 +63,52 @@
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
+            background: transparent;
             border: 1px solid var(--glass-border);
             color: var(--light);
             -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
         }
 
+        /* Navbar */
+        #navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+
+        #navbar.scrolled {
+            background-color: var(--glass);
+            border-bottom: 1px solid var(--glass-border);
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+        }
+
+        .nav-container {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links .btn {
+            margin-left: 10px;
+        }
+        
         /* Hero Section */
         #hero {
             position: relative;
-            padding: 100px 0;
+            padding: 150px 0;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -80,76 +117,59 @@
             overflow: hidden;
             z-index: 1;
         }
-
-        .hero-bg-lights {
+        
+        /* New animated background */
+        .hero-bg {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
             overflow: hidden;
+            z-index: -1;
         }
 
-        .hero-light {
+        .shape {
             position: absolute;
-            background: radial-gradient(circle, var(--primary), transparent 70%);
-            opacity: 0.2;
-            animation: moveLight 20s infinite alternate ease-in-out;
             border-radius: 50%;
+            opacity: 0.3;
+            animation: float 20s infinite ease-in-out;
         }
 
-        .light-1 {
-            width: 500px;
-            height: 500px;
-            top: 10%;
-            left: 5%;
-            animation-delay: 0s;
-        }
+        .shape-1 { background-color: var(--primary); width: 600px; height: 600px; top: 10%; left: -20%; }
+        .shape-2 { background-color: var(--secondary); width: 800px; height: 800px; bottom: -20%; right: -20%; animation-delay: -5s; }
+        .shape-3 { background-color: var(--accent); width: 400px; height: 400px; top: 60%; left: 30%; animation-delay: -10s; }
 
-        .light-2 {
-            width: 600px;
-            height: 600px;
-            bottom: 10%;
-            right: 15%;
-            animation-delay: -5s;
-        }
-
-        .light-3 {
-            width: 400px;
-            height: 400px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation-delay: -10s;
-        }
-
-        @keyframes moveLight {
-            0% {
-                transform: translate(0, 0) scale(1);
-            }
-            100% {
-                transform: translate(20px, 20px) scale(1.1);
-            }
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, -30px) scale(1.1); }
+            100% { transform: translate(0, 0) scale(1); }
         }
 
         .hero-content {
             position: relative;
             z-index: 2;
+            animation: fadeInScale 1s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            opacity: 0;
+        }
+        
+        @keyframes fadeInScale {
+            from { transform: scale(0.9) translateY(20px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
         }
 
         .hero-content h1 {
             font-size: 3rem;
-            font-weight: 700;
+            font-weight: 800;
             margin-bottom: 20px;
             line-height: 1.2;
-            background: linear-gradient(135deg, white, #a0a0ff);
+            background: linear-gradient(135deg, white, #e0d8ff, var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .hero-content p {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: #ccc;
             max-width: 600px;
             margin: 0 auto 40px;
@@ -158,13 +178,7 @@
         .hero-buttons .btn {
             margin: 0 10px;
         }
-
-        @media (min-width: 768px) {
-            .hero-content h1 {
-                font-size: 4.5rem;
-            }
-        }
-
+        
         /* Features Section */
         #features {
             padding: 80px 0;
@@ -175,7 +189,7 @@
         .section-title {
             text-align: center;
             font-size: 2.5rem;
-            font-weight: 700;
+            font-weight: 800;
             margin-bottom: 60px;
             background: linear-gradient(135deg, var(--light), var(--accent));
             -webkit-background-clip: text;
@@ -184,46 +198,71 @@
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
         }
 
         .feature-card {
             background: var(--glass);
             border: 1px solid var(--glass-border);
-            padding: 30px;
-            border-radius: 15px;
+            padding: 40px 30px;
+            border-radius: 20px;
             text-align: center;
             -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent 0%, var(--primary) 20%, transparent 40%, var(--secondary) 60%, transparent 80%, var(--primary) 100%);
+            animation: rotate 4s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            opacity: 0.15;
+        }
+
+        @keyframes rotate {
+            to { transform: rotate(360deg); }
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border-color: var(--primary);
         }
 
         .feature-card .icon {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border-radius: 50%;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
         }
 
         .feature-card .icon svg {
             fill: white;
-            width: 30px;
-            height: 30px;
+            width: 35px;
+            height: 35px;
         }
 
         .feature-card h3 {
             font-size: 1.5rem;
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 10px;
         }
 
@@ -253,8 +292,8 @@
         }
 
         .stat-number {
-            font-size: 3rem;
-            font-weight: 700;
+            font-size: 3.5rem;
+            font-weight: 800;
             background: linear-gradient(135deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -262,8 +301,9 @@
         }
 
         .stat-label {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: #ccc;
+            font-weight: 500;
         }
 
         /* Call to Action Section */
@@ -274,19 +314,26 @@
 
         .cta-content {
             background: linear-gradient(135deg, var(--secondary), var(--primary));
-            padding: 60px 40px;
-            border-radius: 20px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            padding: 80px 40px;
+            border-radius: 25px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            animation: pulse 4s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); }
+            50% { transform: scale(1.01); box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); }
         }
 
         .cta-content h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
+            font-size: 2.8rem;
+            font-weight: 800;
             margin-bottom: 20px;
         }
 
         .cta-content p {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: #eee;
             margin-bottom: 40px;
         }
@@ -302,21 +349,29 @@
 </head>
 <body>
     <header>
-        <nav class="container" style="padding: 20px 0; display: flex; justify-content: space-between; align-items: center;">
-            <a href="#" class="logo" style="font-size: 1.5rem; font-weight: 700; color: white; text-decoration: none;">NJGhosting</a>
-            <div class="nav-links">
-                <a href="https://panel.njghosting.xyz/auth/login" class="btn btn-secondary" style="margin-left: 10px;">Login</a>
-                <a href="https://panel.njghosting.xyz/auth/register" class="btn btn-primary" style="margin-left: 10px;">Register</a>
+        <nav id="navbar">
+            <div class="container nav-container">
+                <a href="#" class="logo">NJGhosting</a>
+                <div class="nav-links">
+                    <a href="https://panel.njghosting.xyz/auth/login" class="btn btn-secondary">Login</a>
+                    <a href="https://panel.njghosting.xyz/auth/register" class="btn btn-primary">Register</a>
+                    <a href="https://discord.gg/rcA6HJjDk8" class="btn btn-secondary">
+                        <svg style="width: 24px; height: 24px; vertical-align: middle; margin-right: 5px;" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20.25 0H3.75C1.68 0 0 1.68 0 3.75V20.25C0 22.32 1.68 24 3.75 24H20.25C22.32 24 24 22.32 24 20.25V3.75C24 1.68 22.32 0 20.25 0ZM18.72 15.68C18.28 16.2 17.7 16.59 17.06 16.85C16.42 17.11 15.74 17.25 15.06 17.25C13.59 17.25 12.33 16.51 11.25 15.34C10.17 16.51 8.91 17.25 7.44 17.25C6.76 17.25 6.08 17.11 5.44 16.85C4.8 16.59 4.22 16.2 3.78 15.68C3.34 15.17 3.09 14.54 3.09 13.84C3.09 13.14 3.34 12.51 3.78 12C4.22 11.49 4.8 11.1 5.44 10.84C6.08 10.58 6.76 10.44 7.44 10.44C8.91 10.44 10.17 11.18 11.25 12.35C12.33 11.18 13.59 10.44 15.06 10.44C15.74 10.44 16.42 10.58 17.06 10.84C17.7 11.1 18.28 11.49 18.72 12C19.16 12.51 19.41 13.14 19.41 13.84C19.41 14.54 19.16 15.17 18.72 15.68Z" />
+                        </svg>
+                        Discord
+                    </a>
+                </div>
             </div>
         </nav>
     </header>
 
     <main>
         <section id="hero">
-            <div class="hero-bg-lights">
-                <div class="hero-light light-1"></div>
-                <div class="hero-light light-2"></div>
-                <div class="hero-light light-3"></div>
+            <div class="hero-bg">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
             </div>
             <div class="container hero-content">
                 <h1>Next-Gen Web Hosting</h1>
@@ -396,7 +451,7 @@
 
     <footer id="footer">
         <div class="container">
-            <p>&copy; 2024 NJGhosting. All Rights Reserved.</p>
+            <p>&copy; 2025 NJGhosting. All Rights Reserved.</p>
         </div>
     </footer>
 
@@ -426,12 +481,15 @@
             appearOnScroll.observe(fader);
         });
 
-        // Delay the hero content fade-in to allow for the background animation to start
-        setTimeout(() => {
-            const heroContent = document.querySelector('.hero-content');
-            heroContent.style.opacity = '1';
-            heroContent.style.transform = 'translateY(0)';
-        }, 100);
+        // Sticky navbar on scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
 
         // Performance metrics counter animation
         function animateCounter(element, target, suffix = '') {
@@ -461,6 +519,8 @@
                         animateCounter(entry.target, 99.9, '%');
                     } else if (text.includes('ms')) {
                         animateCounter(entry.target, 50, 'ms');
+                    } else if (text.includes('+')) {
+                        animateCounter(entry.target, 10000, '+');
                     }
                 }
             });
